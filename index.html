@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>laughing man</title>
+</head>
+<body>
+	<canvas id="text" width="500px" height="500px" style="position: absolute; z-index: 0"></canvas>
+	<canvas id="face" width="500px" height="500px" style="position: absolute; z-index: 10"></canvas>
+</body>
+</html>
+
+<script type="text/javascript">
+	var cf = document.getElementById("face");
+	var cfe = cf.getContext("2d");
+	var img = new Image();
+	img.onload = function(){
+		cfe.drawImage(img,0,0,500,500);
+	};
+	img.src = "limg.svg";
+	
+</script>
+
+<script type="text/javascript">
+	var ct = document.getElementById('text');
+	var ctx = ct.getContext("2d");
+	var text = "天若有情天亦老我为长者续一秒苟利国家生死以岂因祸福避趋之";
+	var anglePerRotate = 2 * Math.PI / text.length;
+	ctx.font="italic small-caps bolder 25px cursive";
+	ctx.fillStyle="#004B73";
+	ctx.translate(250,250);
+
+	setInterval(function(){
+		ctx.clearRect(-250,-250,500,500);
+		ctx.rotate(Math.PI / 360);
+		for (var i = 0; i < text.length; i++) {
+			ctx.fillText(text[i],0,-160);
+			ctx.rotate(anglePerRotate);
+		};
+	},20);
+</script>
