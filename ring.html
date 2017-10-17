@@ -1,0 +1,67 @@
+
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>laughing man</title>
+	</head>
+	<body>
+	<input type="text" name="Text" id="Ring"/>
+	<button type="submit" value="Submit" onclick="generateRing()">Submit</button>
+	<button type="submit" value="Submit" onclick="Clear()">Clear</button>
+	<button type="submit" value="Submit" onclick="Save()">Save</button>
+	<canvas id="text" width="1000px" height="1000px"></canvas>
+	</body>
+	</html>
+
+	<script type="text/javascript">
+	var w = window.innerWidth;
+	var h = window.innerHeight;
+	var t = h/2-500;
+	var l = w/2-500;
+
+	var ct = document.getElementById('text');
+	ct.style.left = l+"px";
+	ct.style.top = t+"px";
+	var ctx = ct.getContext("2d");
+	ctx.translate(500,500);
+
+	function generateRing() {
+		ctx.clearRect(-500,-500,1000,1000);
+
+		var text = document.getElementById("Ring");
+		var textVal = text.value;
+		var anglePerRotate = 2 * Math.PI / textVal.length;
+		ctx.font="italic small-caps bolder 36px cursive";
+		ctx.fillStyle="#004B73";
+
+		for (var i = 0; i < textVal.length; i++) {
+		ctx.fillText(textVal[i],0,-325);
+		ctx.rotate(anglePerRotate);
+		};
+	};
+
+	function Clear(){
+		var text = document.getElementById("Ring");
+		text.value = "";
+		generateRing();
+	};
+
+	function Save() {
+		if (document.getElementById("Ring").value.length < 20){
+			alert("Too short for a ring, please input at least 20 char!");
+			Clear();
+			return;
+		}
+		var textDataURI = ct.toDataURL();
+		var textImg = new Image();
+		textImg.src = textDataURI;
+
+		var link = document.createElement('a');
+		document.body.appendChild(link);
+		link.href = textImg.src;
+		link.download = 'ring.png';
+		link.click();
+	};
+	</script>
+	
