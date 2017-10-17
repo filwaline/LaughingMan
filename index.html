@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>laughing man</title>
+</head>
+<body>
+	<canvas id="text" width="1000px" height="1000px" style="position: absolute; z-index: 0"></canvas>
+	<canvas id="face" width="1000px" height="1000px" style="position: absolute; z-index: 10"></canvas>
+</body>
+</html>
+
+<script type="text/javascript">
+	var w = window.innerWidth;
+	var h = window.innerHeight;
+	var t = h/2-500;
+	var l = w/2-500;
+
+	var cf = document.getElementById("face");
+	cf.style.left = l+"px";
+	cf.style.top = t+"px";
+	
+	var ct = document.getElementById('text');
+	ct.style.left = l+"px";
+	ct.style.top = t+"px";
+</script>
+
+<script type="text/javascript">
+	var cfe = cf.getContext("2d");
+	var img = new Image();
+	img.onload = function(){
+		cfe.drawImage(img,0,0,1000,1000);
+	};
+	img.src = "limg.svg";
+</script>
+
+<script type="text/javascript">
+	var ctx = ct.getContext("2d");
+	var text = "天若有情天亦老我为长者续一秒苟利国家生死以岂因祸福避趋之";
+	// var text = "I thought what I'd do was, I'd pretend I was one of those deaf-mutes. ";
+	var anglePerRotate = 2 * Math.PI / text.length;
+	ctx.font="italic small-caps bolder 36px cursive";
+	ctx.fillStyle="#004B73";
+	ctx.translate(500,500);
+
+	for (var i = 0; i < text.length; i++) {
+			ctx.fillText(text[i],0,-325);
+			ctx.rotate(anglePerRotate);
+		};
+
+	var textDataURI = ct.toDataURL();
+	var textImg = new Image();
+	textImg.src = textDataURI;
+
+	setInterval(function(){
+		ctx.clearRect(-500,-500,1000,1000);
+		ctx.rotate(- Math.PI / 360);
+		ctx.drawImage(textImg,-500,-500);
+	},20);
+</script>
